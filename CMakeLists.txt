@@ -8,11 +8,20 @@ set(CMAKE_CXX_STANDARD 11)
 
 include_directories(include)
 
-# Add main.cpp file of the project root directory as a source file
-set(SOURCE_FILES
-	src/main.cpp 
-	src/my_vector.cpp
-)
+# check if i want to run tests
+if(${TARGET} STREQUAL "test")
+	include("./src/test/${PATH}/source.cmake")
+
+# otherwise it builds the main project
+else()
+	
+	# Add main.cpp file of the project root directory as a source file
+	set(SOURCE_FILES
+		src/main.cpp 
+		src/my_vector.cpp
+	)
+
+endif()
 
 # Add executable target with source files listed in SOURCE_FILES variable
 add_executable(project_med ${SOURCE_FILES})

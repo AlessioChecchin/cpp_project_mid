@@ -4,7 +4,7 @@
 
 int main()
 {
-	prj::my_vector xx;
+	prj::my_vector xx(10);
 
 	for(int i = 0; i < xx.size(); i++)
 	{
