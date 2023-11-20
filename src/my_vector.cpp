@@ -9,10 +9,14 @@ prj::my_vector::my_vector(unsigned long int size): capacity_{ size }, size_{ siz
 	 * WARNING: new double[0] allocates memory even if the buffer has 0 elements. The allocated resource
 	 * MUST be released, even if it has 0 elements. If not released it could cause a memory leak.
 	 * SEE: https://stackoverflow.com/questions/1087042/c-new-int0-will-it-allocate-memory
+	 * 
+	 * N.B. Member initializers list are called in the order corresponding to the class declaration
+	 * If we do not use size, but size_ or capacity_ to initialize other member we could generate hard to fix bugs.
+	 * SEE: https://www.geeksforgeeks.org/order-of-execution-in-initializer-list-in-c/
 	*/
 }
 
-prj::my_vector::my_vector(std::initializer_list<double> list): capacity_{ list.size() }, size_{ capacity_ }, v_{ new double[capacity_] }
+prj::my_vector::my_vector(std::initializer_list<double> list): capacity_{ list.size() }, size_{ list.size() }, v_{ new double[list.size()] }
 {
 	std::copy(list.begin(), list.end(), v_);
 }
