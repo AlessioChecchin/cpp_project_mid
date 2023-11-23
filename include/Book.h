@@ -22,6 +22,7 @@ namespace prj
 		Book(std::string author_name, std::string author_surname, std::string title, std::string isbn, Date copyright_date, State state);
 		Book(const Book& book);
 		Book(Book&& book);
+		~Book();
 		
 		std::string get_isbn() const;
 		std::string get_title() const;
@@ -33,11 +34,10 @@ namespace prj
 		void set_state(State state);
 
 		Book& operator=(const Book& book);
-
 		
 	private:
 		
-		constexpr unsigned short kIsbnSize = 13;
+		static const unsigned short kIsbnSize = 13;
 
 		std::string author_name_;
 		std::string author_surname_;

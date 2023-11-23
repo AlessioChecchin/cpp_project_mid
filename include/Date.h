@@ -1,6 +1,8 @@
-#ifndef DATE_H
-#define DATE_H
+#ifndef DATE_H_
+#define DATE_H_
 
+#include <chrono>
+#include <ctime>
 #include <initializer_list>
 
 /**
@@ -9,42 +11,38 @@
 namespace prj
 {
 	/**
-	 * Implements a vector similar to std::vector
+	 * Implements a Date
 	*/
 	class Date
 	{
 	private:
 
-        /**
-         * The number of days from Octorber 4 1582 (introduction of the Gregorian calendar)
-        */
-        unsigned long int days_;
+		/**
+		 * Object representing the date
+		 * https://en.cppreference.com/w/cpp/chrono/c/tm
+		*/
+		std::tm utc_time;
 
-        /**
-         * True if the date is valid, false otherwise
-        */
-        bool isValid();
+		static const int kMonthOffset = 1;
+		static const int kYearOffset = 1900;
 
+		/**
+		 * True if the date is valid, false otherwise
+		*/
+		bool isValid();
 
 	public:
 
-        /**
-         * Construct a Date with the specified day, month and year
-         * 
-         * @param day Day of the Date
-         * @param month Month of the Date
-         * @param year Year of the Date
-        */
-        Date(unsigned int day, unsigned int month, unsigned int year);
-
-        /**
-		 * Construct a Date that will contain the day/month/year passed in the initializer_list
+		/**
+		 * Construct a Date with the specified day, month and year
 		 * 
-		 * @param list A list of elements
+		 * @param day Day of the Date
+		 * @param month Month of the Date
+		 * @param year Year of the Date
 		*/
-		Date(std::initializer_list<unsigned long int> list);
+		Date(unsigned int day, unsigned int month, unsigned int year);
 
-        /**
+		/**
 		 * Copy constructor
 		 * 
 		 * @param date The date to copy
@@ -58,32 +56,32 @@ namespace prj
 		*/
 		Date(Date&& date);
 
-        /**
-         * True if the date is within a leaf year, false otherwise
-        */
-        bool isLeaf();
+		/**
+		 * True if the date is within a leap year, false otherwise
+		*/
+		//bool isLeap() const;
 
-        /**
-         * Year getter
-         * @return The year of the date
-        */
-        unsigned int getYear();
+		/**
+		 * Year getter
+		 * @return The year of the date
+		*/
+		unsigned int getYear() const;
 
-        /**
-         * Day getter
-         * @return The day of the date
-        */
-        unsigned int getDay();
+		/**
+		 * Day getter
+		 * @return The day of the date
+		*/
+		unsigned int getDay() const;
 
-        /**
-         * Month getter
-         * @return The month of the date
-        */
-        unsigned int gedMonth();
+		/**
+		 * Month getter
+		 * @return The month of the date
+		*/
+		unsigned int gedMonth() const;
 
-        Date& operator=(const Date& date);
-        Date& operator-(const Date& date);
-        Date& operator+(const Date& date);
+		/*Date& operator=(const Date& date);
+		Date& operator-(const Date& date);
+		Date& operator+(const Date& date);*/
 	};
 }
 

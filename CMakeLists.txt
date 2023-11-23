@@ -18,7 +18,8 @@ else()
 	# Add main.cpp file of the project root directory as a source file
 	set(SOURCE_FILES
 		src/main.cpp 
-		src/my_vector.cpp
+		src/Book.cpp
+		#src/my_vector.cpp
 	)
 
 endif()
