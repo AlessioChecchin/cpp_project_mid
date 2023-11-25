@@ -3,7 +3,6 @@
 
 #include <chrono>
 #include <ctime>
-#include <initializer_list>
 
 /**
  * Project namespace
@@ -15,23 +14,13 @@ namespace prj
 	*/
 	class Date
 	{
-	private:
-
-		/**
-		 * Object representing the date
-		 * https://en.cppreference.com/w/cpp/chrono/c/tm
-		*/
-		std::tm utc_time;
-
-		static const int kMonthOffset = 1;
-		static const int kYearOffset = 1900;
-
-		/**
-		 * True if the date is valid, false otherwise
-		*/
-		bool isValid();
 
 	public:
+
+		/**
+		 * Construct a default date with value 01/01/1900
+		*/
+		Date();
 
 		/**
 		 * Construct a Date with the specified day, month and year
@@ -40,7 +29,7 @@ namespace prj
 		 * @param month Month of the Date
 		 * @param year Year of the Date
 		*/
-		Date(unsigned int day, unsigned int month, unsigned int year);
+		Date(int day, int month, int year);
 
 		/**
 		 * Copy constructor
@@ -57,31 +46,43 @@ namespace prj
 		Date(Date&& date);
 
 		/**
-		 * True if the date is within a leap year, false otherwise
-		*/
-		//bool isLeap() const;
-
-		/**
 		 * Year getter
+		 * 
 		 * @return The year of the date
 		*/
-		unsigned int getYear() const;
+		int get_year() const;
 
 		/**
 		 * Day getter
+		 * 
 		 * @return The day of the date
 		*/
-		unsigned int getDay() const;
+		int get_day() const;
 
 		/**
 		 * Month getter
+		 * 
 		 * @return The month of the date
 		*/
-		unsigned int gedMonth() const;
+		int get_month() const;
 
-		/*Date& operator=(const Date& date);
-		Date& operator-(const Date& date);
-		Date& operator+(const Date& date);*/
+		/**
+		 * Assign operator
+		 * 
+		 * @param date The dateto assign
+		*/
+		Date& operator=(const Date& date);
+
+	private:
+
+		/**
+		 * Object representing the date
+		 * https://en.cppreference.com/w/cpp/chrono/c/tm
+		*/
+		std::tm utc_time_ {};
+
+		static const int kMonthOffset = 1;
+		static const int kYearOffset = 1900;
 	};
 }
 

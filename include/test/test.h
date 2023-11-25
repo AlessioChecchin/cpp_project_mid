@@ -19,6 +19,6 @@ template <typename First, typename... Rest>
 void Print(First firstValue, Rest... rest) { Print(firstValue); std::cout << LOGGER_SEPARATOR; Print(rest...); }
 
 #define TEST int main(void)
-#define LOG(...) Print(__VA_ARGS__);
+#define LOG(...) { Print(__VA_ARGS__); std::cout << LOGGER_SEPARATOR; };
 
 #endif

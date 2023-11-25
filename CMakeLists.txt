@@ -19,6 +19,7 @@ else()
 	set(SOURCE_FILES
 		src/main.cpp 
 		src/Book.cpp
+		src/Date.cpp
 		#src/my_vector.cpp
 	)
 
