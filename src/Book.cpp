@@ -48,19 +48,9 @@ Book::Book(const Book& book):
 Book::Book(Book&& book):
 	Book(book.author_name_, book.author_surname_, book.title_, book.isbn_)
 {
-	// We can't delegate the copy to the other constructor because we need to check if the copyright_date is null.
-	// Dereferencing a nullptr results in undefined behaviour, we need to avoid it.
-	// Here we could use the setter but we want to avoid a unnecessary copy.
-	if(has_copyright())
-	{
-		// Copying pointer (shallow copy)
-		copyright_date_ = book.copyright_date_;
-	}
-	else 
-	{
-		copyright_date_ = nullptr;
-	}
-	
+	// Pointer handling is delegated to the setter (the one that takes a pointer)
+	set_copyright_date(book.copyright_date_);
+
 	state_ = book.state_;
 
 	// Invalidating book => Isbn is empty (violates the kIsbnSize constraint)
@@ -125,7 +115,9 @@ void Book::set_author_surname(const std::string& surname)
 
 void Book::set_copyright_date(const Date& date)
 {
-	*copyright_date_ = date;
+	// Free eventual resources
+	delete copyright_date_;
+	copyright_date_ = new Date(date);
 }
 
 void Book::set_copyright_date(const Date* date)
@@ -137,6 +129,8 @@ void Book::set_copyright_date(const Date* date)
 	}
 	else 
 	{
+		// Free eventual resources
+		delete copyright_date_;
 		copyright_date_ = nullptr;
 	}
 }
