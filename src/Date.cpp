@@ -3,10 +3,13 @@
 
 #include "Date.h"
 
+namespace prj
+{
+
 /**
  * Construct a default date with value 01/01/1900
 */
-prj::Date::Date(): utc_time_ {}
+Date::Date(): utc_time_ {}
 {
 	utc_time_.tm_mday = 1;
 	utc_time_.tm_mon = 0;
@@ -20,20 +23,26 @@ prj::Date::Date(): utc_time_ {}
  * @param month Month of the Date
  * @param year Year of the Date
 */
-prj::Date::Date(int day, int month, int year): utc_time_ {}
+Date::Date(int day, int month, int year): utc_time_ {}
 {
 	utc_time_.tm_mday = day;                    // tm_mday > 0
 	utc_time_.tm_mon = month - kMonthOffset;    // tm_mon  > 0
 	utc_time_.tm_year = year - kYearOffset;     // tm_year could be negative
 
-	// https://stackoverflow.com/questions/29311412/how-can-i-tell-if-my-struct-tm-has-been-left-in-an-invalid-state
 	/**
-	 * std::maketime interprets utc_time and, if the structure has invialid data, tries to interpret it
-	 * we check if it changed the structure, if it did, it means that the data was invalid
+	 * std::maketime interprets utc_time and, if the structure has invialid data, tries to interpret it.
+	 * We check if it changed the structure, if it did, it means that the data was invalid
+	 * 
+	 * See: https://en.cppreference.com/w/cpp/chrono/c/mktime
+	 * See: https://stackoverflow.com/questions/29311412/how-can-i-tell-if-my-struct-tm-has-been-left-in-an-invalid-state
+	 * Converts local calendar time to a time since epoch as a std::time_t object. time->tm_wday and time->tm_yday are ignored.
+	 * The values in time are permitted to be outside their normal ranges.
+     * A negative value of time->tm_isdst causes mktime to attempt to determine if Daylight Saving Time was in effect.
+     * If the conversion is successful, the time object is modified. All fields of time are updated to fit their proper ranges. time->tm_wday and time->tm_yday are recalculated using information available in other fields. 
 	*/
 
 	time_t op_result = std::mktime(&utc_time_);
-	bool is_valid = op_result != static_cast<std::time_t>(-1) && utc_time_.tm_mday == day && utc_time_.tm_mon == month - kMonthOffset && utc_time_.tm_year == year - kYearOffset;
+	bool is_valid = (op_result != static_cast<std::time_t>(-1)) && (utc_time_.tm_mday == day) && (utc_time_.tm_mon == month - kMonthOffset) && (utc_time_.tm_year == year - kYearOffset);
 	
 	if(!is_valid)
 	{
@@ -46,8 +55,8 @@ prj::Date::Date(int day, int month, int year): utc_time_ {}
  * 
  * @param date The date to copy
 */
-prj::Date::Date(const Date& date):
-	prj::Date(date.get_day(), date.get_month(), date.get_year())
+Date::Date(const Date& date):
+	Date(date.get_day(), date.get_month(), date.get_year())
 {}
 
 /**
@@ -55,21 +64,21 @@ prj::Date::Date(const Date& date):
  * 
  * @param date The date to move
 */
-prj::Date::Date(prj::Date&& date):
-	prj::Date(date.get_day(), date.get_month(), date.get_year())
+Date::Date(Date&& date):
+	Date(date.get_day(), date.get_month(), date.get_year())
 {
 	utc_time_.tm_mday = 1;
 	utc_time_.tm_mon = 0;
 	utc_time_.tm_year = 0;
 }
 
-int prj::Date::get_day()   const { return utc_time_.tm_mday; }
-int prj::Date::get_month() const { return utc_time_.tm_mon + kMonthOffset; }
-int prj::Date::get_year()  const { return utc_time_.tm_year + kYearOffset; }
+int Date::get_day()   const { return utc_time_.tm_mday; }
+int Date::get_month() const { return utc_time_.tm_mon + kMonthOffset; }
+int Date::get_year()  const { return utc_time_.tm_year + kYearOffset; }
 
-prj::Date& prj::Date::operator=(const Date& date)
+Date& Date::operator=(const Date& date)
 {
-	// Only copies properties of interest for prj::Date
+	// Only copies properties of interest for Date
 	// Note that std::tm is standard defined at https://en.cppreference.com/w/cpp/chrono/c/tm
 	// but some implementation include additional fields for handling timezones (i.e. long int tm_gmtoff; const char *tm_zone;)
 	// which are not standard defined.
@@ -80,4 +89,6 @@ prj::Date& prj::Date::operator=(const Date& date)
 	utc_time_.tm_year = date.utc_time_.tm_year;
 
 	return *this;
+}
+
 }

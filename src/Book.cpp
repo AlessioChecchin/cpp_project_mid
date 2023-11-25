@@ -2,61 +2,56 @@
 
 #include <stdexcept>
 #include <string>
+#include <iostream>
 
+namespace prj
+{
 
-prj::Book::Book(): prj::Book("", "", "", std::string(kIsbnSize, '0'))
+Book::Book():
+	Book("", "", "", std::string(kIsbnSize, '0'))
 {
 	// Delegating constructor
 	// An empty book has a 0-value isbn and all other infromations are empty
 }
 
-prj::Book::Book(std::string author_name, std::string author_surname, std::string title, std::string isbn, Date copyright_date, State state):
-	author_name_ { author_name },
+Book::Book(const std::string& author_name, const std::string& author_surname, const std::string& title, const std::string& isbn, const Date& copyright_date, State state):
+	author_name_    { author_name },
 	author_surname_ { author_surname },
-	title_ { title },
-	isbn_ { isbn_ },
+	title_          { title },
+	isbn_           { isbn },
 	copyright_date_ { new Date(copyright_date) },
-	state_ { state }
+	state_          { state }
 {
-	// Check size
-	if(isbn_.size() != kIsbnSize) throw std::invalid_argument("Invalid isbn provided");
+	set_isbn(isbn);
 }
 
-prj::Book::Book(std::string author_name, std::string author_surname, std::string title, std::string isbn):
-	author_name_ { author_name },
+Book::Book(const std::string& author_name, const std::string& author_surname, const std::string& title, const std::string& isbn):
+	author_name_    { author_name },
 	author_surname_ { author_surname },
-	title_ { title },
-	isbn_ { isbn_ },
+	title_          { title },
+	isbn_           { isbn },
 	copyright_date_ { nullptr },
-	state_ { prj::Book::State::Available }
+	state_          { Book::State::Available }
 {
-	// Check size
-	if(isbn_.size() != kIsbnSize) throw std::invalid_argument("Invalid isbn provided");
+	set_isbn(isbn);
 }
 
-prj::Book::Book(const prj::Book& book): prj::Book(book.author_name_, book.author_surname_, book.title_, book.isbn_)
+Book::Book(const Book& book):
+	Book(book.author_name_, book.author_surname_, book.title_, book.isbn_)
 {
-	// We can't delegate the copy to the other constructor because we need to check if the copyright_date is null
-	// Dereferenciating a nullptr results in undefined behaviour
-	if(book.copyright_date_ != nullptr)
-	{
-		// Deep copy
-		*copyright_date_ = *book.copyright_date_;
-	}
-	else 
-	{
-		copyright_date_ = nullptr;
-	}
+	// Pointer handling is delegated to the setter (the one that takes a pointer)
+	set_copyright_date(book.copyright_date_);
 	
 	state_ = book.state_;
 }
 
-prj::Book::Book(prj::Book&& book): prj::Book(book.author_name_, book.author_surname_, book.title_, book.isbn_)
+Book::Book(Book&& book):
+	Book(book.author_name_, book.author_surname_, book.title_, book.isbn_)
 {
-	// We can't delegate the copy to the other constructor because we need to check if the copyright_date is null
-	// Dereferenciating a nullptr results in undefined behaviour
-
-	if(book.copyright_date_ != nullptr)
+	// We can't delegate the copy to the other constructor because we need to check if the copyright_date is null.
+	// Dereferencing a nullptr results in undefined behaviour, we need to avoid it.
+	// Here we could use the setter but we want to avoid a unnecessary copy.
+	if(has_copyright())
 	{
 		// Copying pointer (shallow copy)
 		copyright_date_ = book.copyright_date_;
@@ -79,24 +74,76 @@ prj::Book::Book(prj::Book&& book): prj::Book(book.author_name_, book.author_surn
 	book.state_ = State::Available;
 }
 
-prj::Book::~Book()
+Book::~Book()
 {
 	// Note that if copyright_date_ is nullptr the operation results in a well-defined behaviour.
 	// A null pointer deletion is effectively mapped to no-op
 	delete copyright_date_;
 }
 
+std::string Book::get_isbn()           const { return isbn_; }
+std::string Book::get_title()          const { return title_; }
+std::string Book::get_author_name()    const { return author_name_; }
+std::string Book::get_author_surname() const { return author_surname_; }
+Book::State Book::get_state()     const { return state_; }
 
-std::string prj::Book::get_isbn() const { return isbn_; }
-std::string prj::Book::get_title() const { return title_; }
-std::string prj::Book::get_author_name() const { return author_name_; }
-std::string prj::Book::get_author_surname() const { return author_surname_; }
-prj::Date prj::Book::get_copyright_date() const { return *copyright_date_; }
-prj::Book::State prj::Book::get_state() const { return state_; }
-
-void prj::Book::set_state(prj::Book::State state)
+Date Book::get_copyright_date() const
 {
-	if(state != prj::Book::State::Available && state != prj::Book::State::OnLoan)
+	if(!has_copyright())
+	{
+		throw std::logic_error("The book is not protected by copyright");
+	}
+
+	return *copyright_date_;
+}
+
+bool Book::has_copyright() const
+{
+	return copyright_date_ != nullptr;
+}
+
+void Book::set_isbn(const std::string& isbn)
+{
+	if(isbn_.size() != kIsbnSize) { throw std::invalid_argument("Invalid isbn provided"); }
+	isbn_ = isbn;
+}
+
+void Book::set_title(const std::string& title) 
+{
+	title_ = title;
+}
+
+void Book::set_author_name(const std::string& name)
+{
+	author_name_ = name;
+}
+
+void Book::set_author_surname(const std::string& surname)
+{
+	author_surname_ = surname;
+}
+
+void Book::set_copyright_date(const Date& date)
+{
+	*copyright_date_ = date;
+}
+
+void Book::set_copyright_date(const Date* date)
+{
+	if(date != nullptr)
+	{
+		// Call overloaded setter, takes a reference
+		set_copyright_date(*date);
+	}
+	else 
+	{
+		copyright_date_ = nullptr;
+	}
+}
+
+void Book::set_state(Book::State state)
+{
+	if(state != Book::State::Available && state != Book::State::OnLoan)
 	{
 		throw std::invalid_argument("Invalid enum provided");
 	}
@@ -104,7 +151,7 @@ void prj::Book::set_state(prj::Book::State state)
 	state_ = state;
 }
 
-prj::Book& prj::Book::operator=(const prj::Book& book)
+Book& Book::operator=(const Book& book)
 {
 	isbn_ = book.isbn_;
 	author_name_ = book.author_name_;
@@ -112,8 +159,31 @@ prj::Book& prj::Book::operator=(const prj::Book& book)
 	title_ = book.title_;
 	state_ = book.state_;
 
-	// Deep copy
-	*copyright_date_ = *book.copyright_date_;
+	set_copyright_date(book.copyright_date_);
 
 	return *this;
+}
+
+bool operator==(const Book& a, const Book& b)
+{
+	return a.get_isbn() == b.get_isbn();
+}
+
+bool operator!=(const Book& a, const Book& b)
+{
+	return !(a == b);
+}
+
+std::ostream& operator<<(std::ostream& out, const Book& book)
+{
+	//TODO: XX
+	out << book.get_title() << " "
+	    << book.get_author_name() << " "
+		<< book.get_author_surname() << " "
+		<< book.get_isbn() << " "
+		<< (book.has_copyright() ? "copyright date" : "No copyright date");
+		
+	return out;
+}
+
 }

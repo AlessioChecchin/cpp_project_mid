@@ -69,7 +69,7 @@ namespace prj
 		/**
 		 * Assign operator
 		 * 
-		 * @param date The dateto assign
+		 * @param date The date to assign
 		*/
 		Date& operator=(const Date& date);
 
