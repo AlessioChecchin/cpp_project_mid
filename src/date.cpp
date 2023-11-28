@@ -91,4 +91,14 @@ Date& Date::operator=(const Date& date)
 	return *this;
 }
 
+bool operator==(const Date& a, const Date& b)
+{
+	return a.get_day() == b.get_day() && a.get_month() == b.get_month() && a.get_year() == b.get_year();
+}
+
+bool operator!=(const Date& a, const Date& b)
+{
+	return !(a == b);
+}
+
 } // test

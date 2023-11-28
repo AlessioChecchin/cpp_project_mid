@@ -13,6 +13,7 @@ int main()
 	test::test_date_leap_years();
 	
 	test::test_book_constructor();
+	test::test_book_getter();
 
 	return 0;
 }
