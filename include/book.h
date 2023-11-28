@@ -4,8 +4,11 @@
 #include <string>
 #include <iostream>
 
-#include "Date.h"
+#include "date.h"
 
+/**
+ * Project namespace
+*/
 namespace prj
 {
 	class Book
@@ -193,6 +196,6 @@ namespace prj
 	bool operator!=(const Book& a, const Book& b);
 	
 	std::ostream& operator<<(std::ostream& out, const Book& book);
-}
+} // prj
 
-#endif
+#endif // BOOK_H_

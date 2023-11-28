@@ -1,11 +1,17 @@
+#include "test/test_date.h"
+
 #include <stdexcept>
 
 #include "test/test.h"
-#include "Date.h"
+#include "date.h"
 
-bool is_valid(int day, int month, int year)
+namespace test
 {
-	try {
+
+bool is_valid_date(int day, int month, int year)
+{
+	try
+	{
 		prj::Date d(day, month, year);
 		return true;
 	}
@@ -15,19 +21,18 @@ bool is_valid(int day, int month, int year)
 	}
 }
 
-void test_valid_dates()
+void test_date_valid()
 {
-	// B.C
-	assert(is_valid(12, 2, -1) == true);
+	check(is_valid_date(12, 2, -1) == true);
 
-	assert(is_valid(12, 2, 1800) == true);
-	assert(is_valid(15, 2, 1899) == true);
-	assert(is_valid(15, 2, 1900) == true);
-	assert(is_valid(15, 2, 1932) == true);
-	assert(is_valid(29, 9, 2003) == true);
+	check(is_valid_date(12, 2, 1800) == true);
+	check(is_valid_date(15, 2, 1899) == true);
+	check(is_valid_date(15, 2, 1900) == true);
+	check(is_valid_date(15, 2, 1932) == true);
+	check(is_valid_date(29, 9, 2003) == true);
 }
 
-void test_leap_years()
+void test_date_leap_years()
 {
 	int leap_years[] = {
 		1904, 1908, 1912, 1916, 1920, 1924, 1928, 1932, 1936,
@@ -62,47 +67,41 @@ void test_leap_years()
 
 	int not_leap_years[] = { 1900, 2100, 2300, 2500, 2700, 2900, 2200, 2600, 3000 };
 
+	// Here we can use sizeof because the compiler can calculate the full size of the array
 	constexpr int size_leap = sizeof(leap_years) / sizeof(int);
 	constexpr int size_not_leap = sizeof(not_leap_years) / sizeof(int);
 
 	for(int i = 0; i < size_leap; i++)
 	{
-		assert(is_valid(29, 2, leap_years[i]) == true);
+		check(is_valid_date(29, 2, leap_years[i]) == true);
 	}
 
 	for(int i = 0; i < size_not_leap; i++)
 	{
-		assert(is_valid(29, 2, not_leap_years[i]) == false);
+		check(is_valid_date(29, 2, not_leap_years[i]) == false);
 	}
 }
 
-void test_invalid_dates()
+void test_date_invalid()
 {
-	assert(is_valid(29, 13, 2003) == false);
-	assert(is_valid(29, 2, 2001) == false);
-	assert(is_valid(12, 13, 2001) == false);
-	assert(is_valid(-1, 1, 2001) == false);
-	assert(is_valid(1, 13, 1384) == false);
+	check(is_valid_date(29, 13, 2003) == false);
+	check(is_valid_date(29, 2, 2001) == false);
+	check(is_valid_date(12, 13, 2001) == false);
+	check(is_valid_date(-1, 1, 2001) == false);
+	check(is_valid_date(1, 13, 1384) == false);
 }
 
-void test_getter()
+void test_date_getter()
 {
 	prj::Date a(29, 12, 1999);
-	assert(a.get_day() == 29);
-	assert(a.get_month() == 12);
-	assert(a.get_year() == 1999);
+	check(a.get_day() == 29);
+	check(a.get_month() == 12);
+	check(a.get_year() == 1999);
 
 	prj::Date b(4, 6, -1);
-	assert(b.get_day() == 4);
-	assert(b.get_month() == 6);
-	assert(b.get_year() == -1);
+	check(b.get_day() == 4);
+	check(b.get_month() == 6);
+	check(b.get_year() == -1);
 }
 
-TEST {
-	test_valid_dates();
-	test_invalid_dates();
-	test_leap_years();
-	test_getter();
-
-	return 0;
-}
+} // test

@@ -84,6 +84,6 @@ namespace prj
 		static const int kMonthOffset = 1;
 		static const int kYearOffset = 1900;
 	};
-}
+} // prj
 
-#endif
+#endif // DATE_H_

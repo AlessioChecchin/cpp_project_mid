@@ -4,7 +4,8 @@
 #include <algorithm>
 #include <stdexcept>
 #include <initializer_list>
-#include "Book.h"
+
+#include "book.h"
 
 /**
  * Project namespace
@@ -16,22 +17,7 @@ namespace prj
 	*/
 	class Bookshelf
 	{
-	private:
 
-		/**
-		 * The capacity of the bookshelf. The capacity is the physical memory allocated.
-		*/
-		unsigned long int capacity_;
-
-		/**
-		 * The number of books stored in the bookshelf
-		*/
-		unsigned long int size_;
-
-		/**
-		 * Buffer
-		*/
-		Book* v_;
 	public:
 
 		/**
@@ -115,7 +101,24 @@ namespace prj
 		const Book& operator[] (unsigned long int i) const;
 
 		~Bookshelf();
-	};
-}
 
-#endif
+	private:
+
+		/**
+		 * The capacity of the bookshelf. The capacity is the physical memory allocated.
+		*/
+		unsigned long int capacity_{};
+
+		/**
+		 * The number of books stored in the bookshelf
+		*/
+		unsigned long int size_{};
+
+		/**
+		 * Buffer
+		*/
+		Book* v_;
+	};
+} // prj
+
+#endif // BOOKSHELF_H_

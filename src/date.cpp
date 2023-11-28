@@ -1,7 +1,7 @@
+#include "date.h"
+
 #include <stdexcept>
 #include <iostream>
-
-#include "Date.h"
 
 namespace prj
 {
@@ -91,4 +91,4 @@ Date& Date::operator=(const Date& date)
 	return *this;
 }
 
-}
+} // test

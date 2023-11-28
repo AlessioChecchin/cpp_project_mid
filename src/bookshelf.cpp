@@ -1,7 +1,8 @@
-#include "Bookshelf.h"
+#include "bookshelf.h"
 
 namespace prj
 {
+
 Bookshelf::Bookshelf(): Bookshelf(0) {}
 
 Bookshelf::Bookshelf(unsigned long int size): capacity_{ size }, size_{ size }, v_{ new Book[size]() }
@@ -122,4 +123,4 @@ const Book& Bookshelf::operator[] (unsigned long int i) const
 	return operator[](i);
 }
 
-}
+} // test

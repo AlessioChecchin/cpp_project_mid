@@ -1,0 +1,4 @@
+#ifndef TEST_BOOKSHELF_H_
+#define TEST_BOOKSHELF_H_
+
+#endif // TEST_BOOKSHELF_H_
