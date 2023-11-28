@@ -63,7 +63,7 @@ void Bookshelf::reserve(unsigned long int new_cap)
 	capacity_ = new_cap;
 }
 
-void Bookshelf::push_back(Book value)
+void Bookshelf::push_back(const Book& value)
 {
 	if(size_ == capacity_) 
 	{
@@ -129,11 +129,13 @@ bool operator==(const prj::Bookshelf& bksh1, const prj::Bookshelf& bksh2)
 	{
 		return false;
 	}
-	for(int i=0; i<bksh1.size(); i++)
+
+	for(int i = 0; i < bksh1.size(); i++)
 	{
 		if(bksh1[i] != bksh2[i])
 			return false;
 	}
+
 	return true;
 }
 

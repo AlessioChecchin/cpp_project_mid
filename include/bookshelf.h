@@ -67,7 +67,7 @@ namespace prj
 		/**
 		 * Returns the number of elements that the container has currently allocated space for.
 		*/
-		void push_back(Book book);
+		void push_back(const Book& book);
 
 		/**
 		 * Removes the last books of the bookshelf.

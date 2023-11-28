@@ -28,16 +28,17 @@ Date::Date(int day, int month, int year): utc_time_ {}
 	utc_time_.tm_mon = month - kMonthOffset;    // tm_mon  > 0
 	utc_time_.tm_year = year - kYearOffset;     // tm_year could be negative
 
+	
 	/**
-	 * std::maketime interprets utc_time and, if the structure has invialid data, tries to interpret it.
-	 * We check if it changed the structure, if it did, it means that the data was invalid
+	 * Why not std::tm and std::mktime?
 	 * 
-	 * See: https://en.cppreference.com/w/cpp/chrono/c/mktime
-	 * See: https://stackoverflow.com/questions/29311412/how-can-i-tell-if-my-struct-tm-has-been-left-in-an-invalid-state
-	 * Converts local calendar time to a time since epoch as a std::time_t object. time->tm_wday and time->tm_yday are ignored.
-	 * The values in time are permitted to be outside their normal ranges.
-     * A negative value of time->tm_isdst causes mktime to attempt to determine if Daylight Saving Time was in effect.
-     * If the conversion is successful, the time object is modified. All fields of time are updated to fit their proper ranges. time->tm_wday and time->tm_yday are recalculated using information available in other fields. 
+	 * We initially thought of using std::tm and std::mktime to represent dates and to validate them.
+	 * After implementing the Date class in this way, doing numerous tests on different platforms we noticed that the behaviors of Linux,
+	 * Windows and MaxOS changed. On some platforms, dates were invalidated even if they were valid. After some research
+	 * we discovered that std::mktime only supports Jan-1-1970 dates by default.
+	 * If earlier dates were supported it was because of the specific implementation.
+	 * SEE: https://pubs.opengroup.org/onlinepubs/9699919799/basedefs/V1_chap04.html#tag_04_16
+	 * SEE: https://developercommunity.visualstudio.com/t/mktime-does-not-support-dates-before-J/1208504?q=Node+JS+support+
 	*/
 
 	time_t op_result = std::mktime(&utc_time_);

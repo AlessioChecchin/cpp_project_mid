@@ -21,19 +21,14 @@ namespace test
 		prj::Bookshelf c {prj::Book(), prj::Book(), prj::Book()};
 		check(c.size() == 3);
 
-
-		/*
-			SISTEMARE - segmentation fault :(
-		*/
-
 		// Copy constructor
 		prj::Bookshelf d(c);
 		check(d == c);
 
 		// Move constructor
-		// prj::Bookshelf e = std::move(d);
-		// check(e == c);
-		// check(e != a);
+		prj::Bookshelf e = std::move(d);
+		check(e == c);
+		check(e != a);
 		
 	}
 
