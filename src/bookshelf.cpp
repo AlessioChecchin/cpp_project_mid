@@ -19,7 +19,7 @@ Bookshelf::Bookshelf(unsigned long int size): capacity_{ size }, size_{ size }, 
 	*/
 }
 
-Bookshelf::Bookshelf(std::initializer_list<Book> list): capacity_{ list.size() }, size_{ list.size() }, v_{ new Book[list.size()] }
+Bookshelf::Bookshelf(std::initializer_list<Book> list): capacity_( list.size() ), size_( list.size() ), v_( new Book[list.size()] )
 {
 	std::copy(list.begin(), list.end(), v_);
 }
@@ -29,7 +29,7 @@ Bookshelf::Bookshelf(const Bookshelf& bookshelf): capacity_{ bookshelf.capacity_
 	std::copy(bookshelf.v_, bookshelf.v_ + bookshelf.size_, v_);
 }
 
-Bookshelf::Bookshelf(Bookshelf&& bookshelf): capacity_{ bookshelf.capacity_ }, size_{ bookshelf.size_ }
+Bookshelf::Bookshelf(Bookshelf&& bookshelf): capacity_{ bookshelf.capacity_ }, size_{ bookshelf.size_ }, v_{ bookshelf.v_ }
 {
 	// clears original bookshelf
 	bookshelf.size_ = 0;
@@ -120,7 +120,7 @@ Book& Bookshelf::operator[] (unsigned long int i)
 
 const Book& Bookshelf::operator[] (unsigned long int i) const
 {
-	return operator[](i);
+	return v_[i];
 }
 
 bool operator==(const prj::Bookshelf& bksh1, const prj::Bookshelf& bksh2)
@@ -141,4 +141,5 @@ bool operator!=(const prj::Bookshelf& bksh1, const prj::Bookshelf& bksh2)
 {
 	return !(bksh1 == bksh2);
 }
+
 } // test

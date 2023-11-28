@@ -117,7 +117,7 @@ namespace prj
 		/**
 		 * Buffer
 		*/
-		Book* v_;
+		Book* v_{nullptr};
 	};
 	bool operator==(const prj::Bookshelf& bksh1, const prj::Bookshelf& bksh2);
 	bool operator!=(const prj::Bookshelf& bksh1, const prj::Bookshelf& bksh2);

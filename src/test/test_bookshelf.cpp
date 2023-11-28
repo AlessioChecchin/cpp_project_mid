@@ -27,8 +27,8 @@ namespace test
 		*/
 
 		// Copy constructor
-		//prj::Bookshelf d(c);
-		//check(d == c);
+		prj::Bookshelf d(c);
+		check(d == c);
 
 		// Move constructor
 		// prj::Bookshelf e = std::move(d);
