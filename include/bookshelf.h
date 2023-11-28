@@ -119,6 +119,8 @@ namespace prj
 		*/
 		Book* v_;
 	};
+	bool operator==(const prj::Bookshelf& bksh1, const prj::Bookshelf& bksh2);
+	bool operator!=(const prj::Bookshelf& bksh1, const prj::Bookshelf& bksh2);
 } // prj
 
 #endif // BOOKSHELF_H_

@@ -11,6 +11,8 @@ namespace test
 	void test_date_invalid();
 	void test_date_leap_years();
 	void test_date_getter();
+	void test_date_constructors();
+	void test_date_operators();
 
 } // test
 

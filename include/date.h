@@ -3,6 +3,7 @@
 
 #include <chrono>
 #include <ctime>
+#include <ostream>
 
 /**
  * Project namespace
@@ -84,7 +85,7 @@ namespace prj
 		static const int kMonthOffset = 1;
 		static const int kYearOffset = 1900;
 	};
-
+	std::ostream& operator<<(std::ostream& out, const Date date);
 	bool operator==(const Date& a, const Date& b);
 	bool operator!=(const Date& a, const Date& b);
 

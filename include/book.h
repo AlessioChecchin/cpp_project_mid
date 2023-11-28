@@ -2,7 +2,7 @@
 #define BOOK_H_
 
 #include <string>
-#include <iostream>
+#include <ostream>
 
 #include "date.h"
 

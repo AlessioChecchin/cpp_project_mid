@@ -123,4 +123,22 @@ const Book& Bookshelf::operator[] (unsigned long int i) const
 	return operator[](i);
 }
 
+bool operator==(const prj::Bookshelf& bksh1, const prj::Bookshelf& bksh2)
+{
+	if(bksh1.size() != bksh2.size())
+	{
+		return false;
+	}
+	for(int i=0; i<bksh1.size(); i++)
+	{
+		if(bksh1[i] != bksh2[i])
+			return false;
+	}
+	return true;
+}
+
+bool operator!=(const prj::Bookshelf& bksh1, const prj::Bookshelf& bksh2)
+{
+	return !(bksh1 == bksh2);
+}
 } // test

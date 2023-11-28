@@ -1,12 +1,77 @@
 #include "test/test_date.h"
 
 #include <stdexcept>
+#include <vector>
+#include <sstream>
+#include <string>
 
 #include "test/test.h"
 #include "date.h"
 
+
 namespace test
 {
+
+void test_date_operators()
+{
+	// operator=
+	prj::Date a;
+	prj::Date b = a;
+	check(b.get_day() == a.get_day());
+	check(b.get_month() == a.get_month());
+	check(b.get_year() == a.get_year());
+
+	// operator==
+	check(a == b);
+
+	// operator !=
+	prj::Date c(1,1,1300);
+	check(a != c);
+
+	// operator<<
+	std::ostringstream os;
+	std::string months[12] = {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
+	for(int i=0; i<12; i++)
+	{
+		prj::Date date(1,i+1,1900);
+		os << date;
+		std::string dateString = "1 "+months[i]+" 1900";
+		check(os.str() == dateString);
+		
+		// Resets ostringstream
+		os.str("");		//required to clear the stream
+		os.clear();		//required to clear errors
+	}
+
+}
+
+void test_date_constructors()
+{
+	// Default constructor
+	prj::Date a;
+	check(a.get_day() == 1);
+	check(a.get_month() == 1);
+	check(a.get_year() == 1900);
+
+	// Complete constructor
+	prj::Date b(4,3,2003);
+	check(b.get_day() == 4);
+	check(b.get_month() == 3);
+	check(b.get_year() == 2003);
+
+	// Copy constructor
+	prj::Date c(b);
+	check(b.get_day() == c.get_day());
+	check(b.get_month() == c.get_month());
+	check(b.get_year() == c.get_year());
+
+	// Move constructor
+	prj::Date moved (std::move(c));
+	check(b.get_day() == moved.get_day());
+	check(b.get_month() == moved.get_month());
+	check(b.get_year() == moved.get_year());
+
+}
 
 bool is_valid_date(int day, int month, int year)
 {
@@ -34,7 +99,7 @@ void test_date_valid()
 
 void test_date_leap_years()
 {
-	int leap_years[] = {
+	std::vector<int> leap_years {
 		1904, 1908, 1912, 1916, 1920, 1924, 1928, 1932, 1936,
 		1940, 1944, 1948, 1952, 1956, 1960, 1964, 1968, 1972, 1976,
 		1980, 1984, 1988, 1992, 1996, 2000, 2004, 2008, 2012, 2016,
@@ -65,18 +130,14 @@ void test_date_leap_years()
 		2980, 2984, 2988, 2992, 2996
 	};
 
-	int not_leap_years[] = { 1900, 2100, 2300, 2500, 2700, 2900, 2200, 2600, 3000 };
+	std::vector<int> not_leap_years = { 1900, 2100, 2300, 2500, 2700, 2900, 2200, 2600, 3000 };
 
-	// Here we can use sizeof because the compiler can calculate the full size of the array
-	constexpr int size_leap = sizeof(leap_years) / sizeof(int);
-	constexpr int size_not_leap = sizeof(not_leap_years) / sizeof(int);
-
-	for(int i = 0; i < size_leap; i++)
+	for(int i = 0; i < leap_years.size(); i++)
 	{
 		check(is_valid_date(29, 2, leap_years[i]) == true);
 	}
 
-	for(int i = 0; i < size_not_leap; i++)
+	for(int i = 0; i < not_leap_years.size(); i++)
 	{
 		check(is_valid_date(29, 2, not_leap_years[i]) == false);
 	}

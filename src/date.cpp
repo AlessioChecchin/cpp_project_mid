@@ -1,8 +1,7 @@
 #include "date.h"
 
 #include <stdexcept>
-#include <iostream>
-
+#include <string>
 namespace prj
 {
 
@@ -67,9 +66,9 @@ Date::Date(const Date& date):
 Date::Date(Date&& date):
 	Date(date.get_day(), date.get_month(), date.get_year())
 {
-	utc_time_.tm_mday = 1;
-	utc_time_.tm_mon = 0;
-	utc_time_.tm_year = 0;
+	date.utc_time_.tm_mday = 1;
+	date.utc_time_.tm_mon = 0;
+	date.utc_time_.tm_year = 0;
 }
 
 int Date::get_day()   const { return utc_time_.tm_mday; }
@@ -99,6 +98,14 @@ bool operator==(const Date& a, const Date& b)
 bool operator!=(const Date& a, const Date& b)
 {
 	return !(a == b);
+}
+
+std::ostream& operator<<(std::ostream& out, const Date date)
+{
+	std::string months[12] = {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
+	out << date.get_day() << " " << months[date.get_month() -1] << " " <<date.get_year();
+
+	return out;
 }
 
 } // test
