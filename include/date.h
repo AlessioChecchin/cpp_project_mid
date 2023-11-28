@@ -84,6 +84,10 @@ namespace prj
 		static const int kMonthOffset = 1;
 		static const int kYearOffset = 1900;
 	};
+
+	bool operator==(const Date& a, const Date& b);
+	bool operator!=(const Date& a, const Date& b);
+
 } // prj
 
 #endif // DATE_H_
