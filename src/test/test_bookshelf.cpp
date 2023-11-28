@@ -5,7 +5,7 @@
 
 namespace test
 {
-    void test_bookshelf_constructors()
+    void test_bookshelf_constructors()			//WIP
 	{
 		constexpr int kSize = 10;
 
@@ -37,8 +37,8 @@ namespace test
 		
 	}
 
-    void test_bookshelf_methods(){};
-    void test_bookshelf_operators(){};
+    void test_bookshelf_methods(){};			//WIP
+    void test_bookshelf_operators(){};			//WIP
 
 
 } //test
