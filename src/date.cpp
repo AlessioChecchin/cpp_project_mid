@@ -6,26 +6,16 @@
 namespace prj
 {
 
-/**
- * Construct a default date with value 01/01/1582
-*/
 Date::Date(): day_{1}, month_{1}, year_{kYearBase}
 {}
 
-/**
- * Construct a Date with the specified day, month and year
- * 
- * @param day Day of the Date
- * @param month Month of the Date
- * @param year Year of the Date
-*/
 Date::Date(unsigned int day, unsigned int month,unsigned int year): day_ {day}, month_{month}, year_{year} 
 {	/**
-q	 * Why not std::tm and std::mktime?
+	 * Why not std::tm and std::mktime?
 	 * 
 	 * We initially thought of using std::tm and std::mktime to represent dates and to validate them.
 	 * After implementing the Date class in this way, doing numerous tests on different platforms we noticed that the behaviors of Linux,
-	 * Windows and MaxOS changed. On some platforms, dates were invalidated even if they were valid. After some research
+	 * Windows and MacOS changed. On some platforms, dates were invalidated even if they were valid. After some research
 	 * we discovered that std::mktime only supports Jan-1-1970 dates by default.
 	 * If earlier dates were supported it was because of the specific implementation.
 	 * SEE: https://pubs.opengroup.org/onlinepubs/9699919799/basedefs/V1_chap04.html#tag_04_16
@@ -38,20 +28,10 @@ q	 * Why not std::tm and std::mktime?
 	}
 }
 
-/**
- * Copy constructor
- * 
- * @param date The date to copy
-*/
 Date::Date(const Date& date):
 	Date(date.get_day(), date.get_month(), date.get_year())
 {}
 
-/**
- * Move constructor
- * 
- * @param date The date to move
-*/
 Date::Date(Date&& date):
 	Date(date.get_day(), date.get_month(), date.get_year())
 {
@@ -121,4 +101,4 @@ std::ostream& operator<<(std::ostream& out, const Date date)
 
 
 
-} // test
+} // prj

@@ -31,7 +31,7 @@ Bookshelf::Bookshelf(const Bookshelf& bookshelf): capacity_{ bookshelf.capacity_
 
 Bookshelf::Bookshelf(Bookshelf&& bookshelf): capacity_{ bookshelf.capacity_ }, size_{ bookshelf.size_ }, v_{ bookshelf.v_ }
 {
-	// clears original bookshelf
+	// Clears original bookshelf
 	bookshelf.size_ = 0;
 	bookshelf.capacity_ = 0;
 	bookshelf.v_ = nullptr;
@@ -45,19 +45,19 @@ Bookshelf::~Bookshelf()
 
 void Bookshelf::reserve(unsigned long int new_cap)
 {
-	// new_cap not greater than actual capacity -> do nothing
+	// New_cap not greater than actual capacity -> do nothing
 	if(new_cap <= capacity_) return;
 	
-	// allocating new capacity
+	// Allocating new capacity
 	Book* tmp = new Book[new_cap];
 
-	// copying data to the new buffer
+	// Copying data to the new buffer
 	std::copy(v_, v_ + size_, tmp);
 
-	// deallocating old buffer (it's translated to no-op if is null)
+	// Deallocating old buffer (it's translated to no-op if is null)
 	delete[] v_;
 
-	// moving pointer
+	// Moving pointer
 	v_ = tmp;
 
 	capacity_ = new_cap;
@@ -67,8 +67,8 @@ void Bookshelf::push_back(const Book& value)
 {
 	if(size_ == capacity_) 
 	{
-		if(size_ == 0) { reserve(1); }
-		else { reserve(capacity_ * 2); }
+		if(size_ == 0) reserve(1);
+		else reserve(2 * capacity_);
 	}
 	
 	v_[size_] = value;
@@ -83,13 +83,13 @@ void Bookshelf::pop_back()
 
 Book& Bookshelf::at(unsigned long int i)
 {
-	if(i >= size_) throw std::out_of_range("Vector index out of bound");
+	if(i < 0 || i >= size_) throw std::out_of_range("Vector index out of bound");
 	return v_[i];
 }
 
 const Book& Bookshelf::at(unsigned long int i) const
 {
-	if(i >= size_) throw std::out_of_range("Vector index out of bound");
+	if(i < 0 || i >= size_) throw std::out_of_range("Vector index out of bound");
 	return v_[i];
 }
 
@@ -145,4 +145,4 @@ bool operator!=(const prj::Bookshelf& bksh1, const prj::Bookshelf& bksh2)
 	return !(bksh1 == bksh2);
 }
 
-} // test
+} // prj

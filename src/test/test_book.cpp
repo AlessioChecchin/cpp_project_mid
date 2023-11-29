@@ -1,8 +1,6 @@
 #include <sstream>
 #include <string>
 
-#include<iostream>
-
 #include "test/test_book.h"
 
 #include "test/test.h"
@@ -13,7 +11,7 @@ namespace test
 
 void test_book_constructor()
 {
-	// Testing Default constructor
+	// Testing default constructor
 	prj::Book e {};
 	check(e.get_isbn() == "0000000000000");
 	check(e.get_title() == "");
@@ -25,14 +23,15 @@ void test_book_constructor()
 	// Default constructor must not have a date. If object 'e' has a date, an exception must be thrown	
 	try 
 	{ 
-		e.get_copyright_date(); check(false); 
+		e.get_copyright_date();
+		check(false); 
 	}
 	catch(const std::logic_error& err) 
 	{ 
 		check(true); 
 	}
 
-	// Testing Constructor 2 (name, surname, isbn)
+	// Testing required constructor (name, surname, isbn)
 	prj::Book a{"Name", "Surname", "Title", "isbn-00001111"};
 	check(a.get_isbn() == "isbn-00001111");
 	check(a.get_author_name() == "Name");
@@ -41,7 +40,7 @@ void test_book_constructor()
 	check(a.get_state() == prj::Book::State::Available);
 	check(a.has_copyright() == false);
 
-	// Testing Complete constructor (name, surname, isbn, date, state)
+	// Testing complete constructor (name, surname, isbn, date, state)
 	prj::Book b{"Name2", "Surname2", "Title2", "isbn-22221111", prj::Date(29, 9, 2003), prj::Book::State::OnLoan };
 	check(b.get_isbn() == "isbn-22221111");
 	check(b.get_author_name() == "Name2");
@@ -50,9 +49,8 @@ void test_book_constructor()
 	check(b.get_state() == prj::Book::State::OnLoan);
 	check(b.has_copyright() == true);
 
-	// Testing Copy constructor
+	// Testing copy constructor
 	prj::Book c(b);
-
 	check(b.get_author_name() == c.get_author_name());
 	check(b.get_author_surname() == c.get_author_surname());
 	check(b.get_copyright_date() == c.get_copyright_date());
@@ -64,8 +62,8 @@ void test_book_constructor()
 	c.set_copyright_date(prj::Date(11, 12, 2013));
 	check(b.get_copyright_date() != c.get_copyright_date());
 
-	// Testing Move constructor
-	prj::Book moved = std::move(b);
+	// Testing move constructor
+	prj::Book moved(std::move(b));
 	check(moved.get_isbn() == "isbn-22221111");
 	check(moved.get_author_name() == "Name2");
 	check(moved.get_author_surname() == "Surname2");
@@ -86,7 +84,7 @@ void test_book_constructor()
 void test_book_getter()
 {
 
-	// Complete constructor
+	// Testing getters
 	prj::Book b{"Name2", "Surname2", "Title2", "isbn-22221111", prj::Date(29, 9, 2003), prj::Book::State::OnLoan };
 	check(b.get_isbn() == "isbn-22221111");
 	check(b.get_author_name() == "Name2");
@@ -95,7 +93,7 @@ void test_book_getter()
 	check(b.get_state() == prj::Book::State::OnLoan);
 	check(b.has_copyright() == true);
 
-	// Getter
+	// Testing date getter
 	try
 	{
 		prj::Date dt = b.get_copyright_date();
@@ -104,9 +102,11 @@ void test_book_getter()
 		check(dt.get_month() == 9);
 		check(dt.get_year() == 2003);
 	}
-	catch(const std::logic_error& err) { check(false); }
+	catch(const std::logic_error& err)
+	{
+		check(false);
+	}
 }
-
 
 void test_book_operators()
 {
@@ -120,13 +120,13 @@ void test_book_operators()
 	check(b.get_isbn() == "1234567890123");
 
 	// Testing operator== 	(a == b <=> a.get_isbn == b.get_isbn)
-	check(a==b);
+	check(a == b);
 
 	// Testing operator!=
 	a.set_isbn("0000000000000");
-	check(a!=b);
+	check(a != b);
 
-	// operator<<
+	// Testing operator<<
 	std::ostringstream os;
 	std::string auth_names[3] = {"Mario", "Luigi" , "Gianni"};
 	std::string auth_surnames[3] = {"Rossi", "Bianchi" , "Verdi"};
@@ -140,8 +140,8 @@ void test_book_operators()
 		check(os.str() == bookString);
 		
 		// Resets ostringstream
-		os.str("");		//required to clear the stream
-		os.clear();		//required to clear errors
+		os.str("");		// Required to clear the stream
+		os.clear();		// Required to clear errors
 	}
 
 }

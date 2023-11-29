@@ -14,20 +14,22 @@ namespace test
 
 void test_date_operators()
 {
-	// operator=
 	prj::Date a;
+
+	// Testing operator=
 	prj::Date b = a;
 	check(b.get_day() == a.get_day());
 	check(b.get_month() == a.get_month());
 	check(b.get_year() == a.get_year());
-	// operator==
+	
+	// Testing operator==
 	check(a == b);
 
-	// operator !=
+	// Testing operator!=
 	prj::Date c(1, 1, 1600);
 	check(a != c);
 
-	// operator<<
+	// Testing operator<<
 	std::ostringstream os;
 	std::string months[12] = {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
 	for(int i = 0; i < 12; i++)
@@ -38,34 +40,34 @@ void test_date_operators()
 		check(os.str() == dateString);
 		
 		// Resets ostringstream
-		os.str("");		//required to clear the stream
-		os.clear();		//required to clear errors
+		os.str("");		// Required to clear the stream
+		os.clear();		// Required to clear errors
 	}
 
 }
 
-void test_date_constructors()			
+void test_date_constructors()
 {
-	// Default constructor
+	// Testing default constructor
 	prj::Date a;
 	check(a.get_day() == 1);
 	check(a.get_month() == 1);
 	check(a.get_year() == 1582);
 
-	// Complete constructor
+	// Testing complete constructor
 	prj::Date b(4,3,2003);
 	check(b.get_day() == 4);
 	check(b.get_month() == 3);
 	check(b.get_year() == 2003);
 
-	// Copy constructor
+	// Testing copy constructor
 	prj::Date c(b);
 	check(b.get_day() == c.get_day());
 	check(b.get_month() == c.get_month());
 	check(b.get_year() == c.get_year());
 
-	// Move constructor
-	prj::Date moved (std::move(c));
+	// Testing move constructor
+	prj::Date moved(std::move(c));
 	check(b.get_day() == moved.get_day());
 	check(b.get_month() == moved.get_month());
 	check(b.get_year() == moved.get_year());

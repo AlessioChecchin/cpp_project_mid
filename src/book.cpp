@@ -170,7 +170,6 @@ bool operator!=(const Book& a, const Book& b)
 
 std::ostream& operator<<(std::ostream& out, const Book& book)
 {
-	//TODO: XX
 	out << book.get_title() << "\n"
 	    << book.get_author_name() << "\n"
 		<< book.get_author_surname() << "\n"
@@ -183,4 +182,4 @@ std::ostream& operator<<(std::ostream& out, const Book& book)
 	return out;
 }
 
-} // test
+} // prj
