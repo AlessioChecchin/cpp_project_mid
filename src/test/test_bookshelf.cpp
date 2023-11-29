@@ -63,8 +63,8 @@ void test_bookshelf_methods()
 	check(b.capacity() == 160);
 
 
-	// Testing at(); at() const;
-	prj::Bookshelf c {
+	// Testing at();
+	prj::Bookshelf c{
 		prj::Book("a", "aa", "aaa", "aaaaaaaaaaaaa"),
 		prj::Book("b", "bb", "bbb", "bbbbbbbbbbbbb"),
 		prj::Book("c", "cc", "ccc", "ccccccccccccc"),
@@ -78,8 +78,15 @@ void test_bookshelf_methods()
 		throw CheckError();
 	}
 	catch(const std::out_of_range& e){}
-		
-		
+
+	try
+	{
+		c.at(-1);
+		throw CheckError();
+	}
+	catch(const std::out_of_range& e){}
+
+	// Testing at() const;
 	const prj::Bookshelf c_const{
 		prj::Book("a", "aa", "aaa", "aaaaaaaaaaaaa"),
 		prj::Book("b", "bb", "bbb", "bbbbbbbbbbbbb"),
@@ -87,9 +94,17 @@ void test_bookshelf_methods()
 		prj::Book("d", "dd", "ddd", "ddddddddddddd")
 	};
 	check(c_const.at(1) == prj::Book("b", "bb", "bbb", "bbbbbbbbbbbbb"));
+
 	try
 	{
 		c_const.at(10);
+		throw CheckError();
+	}
+	catch(const std::out_of_range& e){}
+
+	try
+	{
+		c_const.at(-1);
 		throw CheckError();
 	}
 	catch(const std::out_of_range& e){}
