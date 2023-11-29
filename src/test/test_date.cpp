@@ -24,17 +24,17 @@ void test_date_operators()
 	check(a == b);
 
 	// operator !=
-	prj::Date c(1,1,1600);
+	prj::Date c(1, 1, 1600);
 	check(a != c);
 
 	// operator<<
 	std::ostringstream os;
 	std::string months[12] = {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
-	for(int i=0; i<12; i++)
+	for(int i = 0; i < 12; i++)
 	{
-		prj::Date date(1,i+1,1900);
+		prj::Date date(1, i+1, 1900);
 		os << date;
-		std::string dateString = "1 "+months[i]+" 1900";
+		std::string dateString = "1 " + months[i] + " 1900";
 		check(os.str() == dateString);
 		
 		// Resets ostringstream

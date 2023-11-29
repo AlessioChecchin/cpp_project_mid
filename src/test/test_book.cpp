@@ -1,3 +1,8 @@
+#include <sstream>
+#include <string>
+
+#include<iostream>
+
 #include "test/test_book.h"
 
 #include "test/test.h"
@@ -120,6 +125,19 @@ void test_book_operators()
 	// Testing operator!=
 	a.set_isbn("0000000000000");
 	check(a!=b);
+
+	// operator<<
+	std::ostringstream os;
+
+	prj::Book c("David", "Foster Wallace", "Una cosa divertente che non faro' mai piu'", "887-521-837-4");
+	os << c;
+	std::string bookString = "Una cosa divertente che non faro' mai piu'\nDavid\nFoster Wallace\n887-521-837-4\nNo copyright date\n";
+	check(os.str() == bookString);
+		
+	// Resets ostringstream
+	os.str("");		//required to clear the stream
+	os.clear();		//required to clear errors
+
 }
 
 } // test

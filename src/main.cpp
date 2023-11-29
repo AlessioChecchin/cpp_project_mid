@@ -16,6 +16,7 @@ int main(int argv, char* argc[])
 	test::test_date_leap_years();
 	test::test_date_constructors();
 	test::test_date_operators();
+
 	test::test_book_constructor();
 	test::test_book_getter();
 	test::test_book_operators();
@@ -30,7 +31,7 @@ int main(int argv, char* argc[])
 	prj::Book mybook("David", "Foster Wallace", "Una cosa divertente che non faro' mai piu'", "887-521-837-4");
 	prj::Bookshelf shelf(10);
 	shelf.push_back(mybook);
-	std::cout<<shelf[10];
+	std::cout << shelf[10];
 	shelf.pop_back();
 
 
