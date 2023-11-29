@@ -5,8 +5,6 @@
 #include <sstream>
 #include <string>
 
-#include <iostream>
-
 #include "test/test.h"
 #include "date.h"
 
