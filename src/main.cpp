@@ -24,9 +24,9 @@ int main()
 
 
 
-	test::test_bookshelf_constructors();	//WIP
-	test::test_bookshelf_methods();			//WIP
-	test::test_bookshelf_operators();		//WIP
+	test::test_bookshelf_constructors();
+	test::test_bookshelf_methods();		
+	test::test_bookshelf_operators();	
 
 	std::cout<<"ok";
 	return 0;

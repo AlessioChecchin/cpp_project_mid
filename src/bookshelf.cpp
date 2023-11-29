@@ -1,5 +1,4 @@
 #include "bookshelf.h"
-
 namespace prj
 {
 
@@ -89,7 +88,8 @@ Book& Bookshelf::at(unsigned long int i)
 
 const Book& Bookshelf::at(unsigned long int i) const
 {
-	return at(i);
+	if(i >= size_) throw std::out_of_range("Vector index out of bound");
+	return v_[i];
 }
 
 unsigned long int Bookshelf::size() const
