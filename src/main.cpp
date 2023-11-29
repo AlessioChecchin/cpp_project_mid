@@ -28,7 +28,7 @@ int main(int argv, char* argc[])
 
 
 	// Test required by the exam
-	prj::Book mybook("David", "Foster Wallace", "Una cosa divertente che non faro' mai piu'", "887-521-837-4");	// Replaced "ò", "ù" with "o'", "u'" in the title to avoid encoding errors
+	prj::Book mybook("David", "Foster Wallace", "Una cosa divertente che non faro' mai piu'", "887-521-837-4");	// Replaced "ò", "ù" with "o'", "u'" in the title to avoid encoding errors on certain platforms
 	prj::Bookshelf shelf(10);
 	shelf.push_back(mybook);
 	std::cout << shelf[10];

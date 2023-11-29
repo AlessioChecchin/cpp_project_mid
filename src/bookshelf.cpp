@@ -83,13 +83,15 @@ void Bookshelf::pop_back()
 
 Book& Bookshelf::at(unsigned long int i)
 {
-	if(i < 0 || i >= size_) throw std::out_of_range("Vector index out of bound");
+	// i is unsigned, so it is not necessary to check if it's negative
+	if(i >= size_) throw std::out_of_range("Vector index out of bound");
 	return v_[i];
 }
 
 const Book& Bookshelf::at(unsigned long int i) const
 {
-	if(i < 0 || i >= size_) throw std::out_of_range("Vector index out of bound");
+	// i is unsigned, so it is not necessary to check if it's negative
+	if(i >= size_) throw std::out_of_range("Vector index out of bound");
 	return v_[i];
 }
 
