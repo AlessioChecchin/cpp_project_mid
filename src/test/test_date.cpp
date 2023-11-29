@@ -5,6 +5,8 @@
 #include <sstream>
 #include <string>
 
+#include <iostream>
+
 #include "test/test.h"
 #include "date.h"
 
@@ -21,12 +23,11 @@ void test_date_operators()				//std::invalid_argument throwed //what():  Invalid
 	check(b.get_day() == a.get_day());
 	check(b.get_month() == a.get_month());
 	check(b.get_year() == a.get_year());
-
 	// operator==
 	check(a == b);
 
 	// operator !=
-	prj::Date c(1,1,1300);						//std::invalid_argument throwed
+	prj::Date c(1,1,1600);						//std::invalid_argument throwed
 												//what():  Invalid date provided
 	check(a != c);
 
@@ -47,13 +48,13 @@ void test_date_operators()				//std::invalid_argument throwed //what():  Invalid
 
 }
 
-void test_date_constructors()			//OK
+void test_date_constructors()			
 {
 	// Default constructor
 	prj::Date a;
 	check(a.get_day() == 1);
 	check(a.get_month() == 1);
-	check(a.get_year() == 1900);
+	check(a.get_year() == 1582);
 
 	// Complete constructor
 	prj::Date b(4,3,2003);
@@ -72,7 +73,6 @@ void test_date_constructors()			//OK
 	check(b.get_day() == moved.get_day());
 	check(b.get_month() == moved.get_month());
 	check(b.get_year() == moved.get_year());
-
 }
 
 bool is_valid_date(int day, int month, int year)
@@ -90,8 +90,6 @@ bool is_valid_date(int day, int month, int year)
 
 void test_date_valid()			//test::CheckError throwed
 {
-	check(is_valid_date(12, 2, -1) == true);			//test::CheckError throwed
-
 	check(is_valid_date(12, 2, 1800) == true);			//test::CheckError throwed
 	check(is_valid_date(15, 2, 1899) == true);			//test::CheckError throwed
 	check(is_valid_date(15, 2, 1900) == true);			//test::CheckError throwed
@@ -147,6 +145,7 @@ void test_date_leap_years()			//test::CheckError throwed
 
 void test_date_invalid()			//OK
 {
+	check(is_valid_date(29, 13, 1000) == false);
 	check(is_valid_date(29, 13, 2003) == false);		//OK
 	check(is_valid_date(29, 2, 2001) == false);			//OK
 	check(is_valid_date(12, 13, 2001) == false);		//OK

@@ -6,14 +6,10 @@ namespace prj
 {
 
 /**
- * Construct a default date with value 01/01/1900
+ * Construct a default date with value 01/01/1582
 */
-Date::Date(): utc_time_ {}
-{
-	utc_time_.tm_mday = 1;
-	utc_time_.tm_mon = 0;
-	utc_time_.tm_year = 0;
-}
+Date::Date(): day_{1}, month_{1}, year_{kYearBase}
+{}
 
 /**
  * Construct a Date with the specified day, month and year
@@ -22,15 +18,9 @@ Date::Date(): utc_time_ {}
  * @param month Month of the Date
  * @param year Year of the Date
 */
-Date::Date(int day, int month, int year): utc_time_ {}
-{
-	utc_time_.tm_mday = day;                    // tm_mday > 0
-	utc_time_.tm_mon = month - kMonthOffset;    // tm_mon  > 0
-	utc_time_.tm_year = year - kYearOffset;     // tm_year could be negative
-
-	
-	/**
-	 * Why not std::tm and std::mktime?
+Date::Date(unsigned int day, unsigned int month,unsigned int year): day_ {day}, month_{month}, year_{year} 
+{	/**
+q	 * Why not std::tm and std::mktime?
 	 * 
 	 * We initially thought of using std::tm and std::mktime to represent dates and to validate them.
 	 * After implementing the Date class in this way, doing numerous tests on different platforms we noticed that the behaviors of Linux,
@@ -39,12 +29,9 @@ Date::Date(int day, int month, int year): utc_time_ {}
 	 * If earlier dates were supported it was because of the specific implementation.
 	 * SEE: https://pubs.opengroup.org/onlinepubs/9699919799/basedefs/V1_chap04.html#tag_04_16
 	 * SEE: https://developercommunity.visualstudio.com/t/mktime-does-not-support-dates-before-J/1208504?q=Node+JS+support+
-	*/
-
-	time_t op_result = std::mktime(&utc_time_);
-	bool is_valid = (op_result != static_cast<std::time_t>(-1)) && (utc_time_.tm_mday == day) && (utc_time_.tm_mon == month - kMonthOffset) && (utc_time_.tm_year == year - kYearOffset);
+	*/ 
 	
-	if(!is_valid)
+	if(!is_valid(day_, month_, year_))
 	{
 		throw std::invalid_argument("Invalid date provided");
 	}
@@ -67,28 +54,50 @@ Date::Date(const Date& date):
 Date::Date(Date&& date):
 	Date(date.get_day(), date.get_month(), date.get_year())
 {
-	date.utc_time_.tm_mday = 1;
-	date.utc_time_.tm_mon = 0;
-	date.utc_time_.tm_year = 0;
+	date.day_ = 1;
+	date.month_ = 1;
+	date.year_ = 1582;
 }
 
-int Date::get_day()   const { return utc_time_.tm_mday; }
-int Date::get_month() const { return utc_time_.tm_mon + kMonthOffset; }
-int Date::get_year()  const { return utc_time_.tm_year + kYearOffset; }
+unsigned int Date::get_day()   const { return day_; }
+unsigned int Date::get_month() const { return month_; }
+unsigned int Date::get_year()  const { return year_; }
 
 Date& Date::operator=(const Date& date)
 {
-	// Only copies properties of interest for Date
-	// Note that std::tm is standard defined at https://en.cppreference.com/w/cpp/chrono/c/tm
-	// but some implementation include additional fields for handling timezones (i.e. long int tm_gmtoff; const char *tm_zone;)
-	// which are not standard defined.
-	// We do not want to copy non-standard values.
-
-	utc_time_.tm_mday = date.utc_time_.tm_mday;
-	utc_time_.tm_mon = date.utc_time_.tm_mon;
-	utc_time_.tm_year = date.utc_time_.tm_year;
+	day_ = date.day_;
+	month_ = date.month_;
+	year_ = date.year_;
 
 	return *this;
+}
+
+bool Date::is_valid(const unsigned int day, const unsigned int month, const unsigned int year)
+{
+	unsigned int months[12] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+	if(month == 0 || month > 12)
+		return false;
+	if(year < 1582)
+		return false;
+
+	/**
+	 * Year is a Leap Year <=>
+	 *   - is not divisible by 100, but is divisible by 4
+	 *   - is divisible by 400
+	*/
+	if( (year % 100 != 0 && year % 4 == 0) || (year % 400 == 0) && month == 2)
+	{
+		// It's a leap year and month selected is february (it has 29 days)
+		if(day > months[month-1]+1) 
+			return false;
+	}
+		// It's not a leap year OR the month selected isn't februrary
+	else if(day == 0 || day > months[month-1])
+	{
+		return false;
+	}
+
+	return true;
 }
 
 bool operator==(const Date& a, const Date& b)
@@ -108,5 +117,7 @@ std::ostream& operator<<(std::ostream& out, const Date date)
 
 	return out;
 }
+
+
 
 } // test

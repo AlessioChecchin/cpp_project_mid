@@ -1,8 +1,6 @@
 #ifndef DATE_H_
 #define DATE_H_
 
-#include <chrono>
-#include <ctime>
 #include <ostream>
 
 /**
@@ -19,7 +17,7 @@ namespace prj
 	public:
 
 		/**
-		 * Construct a default date with value 01/01/1900
+		 * Construct a default date with value 01/01/1582
 		*/
 		Date();
 
@@ -30,7 +28,7 @@ namespace prj
 		 * @param month Month of the Date
 		 * @param year Year of the Date
 		*/
-		Date(int day, int month, int year);
+		Date(unsigned int day, unsigned int month, unsigned int year);
 
 		/**
 		 * Copy constructor
@@ -51,21 +49,21 @@ namespace prj
 		 * 
 		 * @return The year of the date
 		*/
-		int get_year() const;
+		unsigned int get_year() const;
 
 		/**
 		 * Day getter
 		 * 
 		 * @return The day of the date
 		*/
-		int get_day() const;
+		unsigned int get_day() const;
 
 		/**
 		 * Month getter
 		 * 
 		 * @return The month of the date
 		*/
-		int get_month() const;
+		unsigned int get_month() const;
 
 		/**
 		 * Assign operator
@@ -80,10 +78,14 @@ namespace prj
 		 * Object representing the date
 		 * https://en.cppreference.com/w/cpp/chrono/c/tm
 		*/
-		std::tm utc_time_ {};
+		unsigned int day_;
+		unsigned int month_;
+		unsigned int year_;
 
-		static const int kMonthOffset = 1;
-		static const int kYearOffset = 1900;
+		static const int kYearBase = 1582;
+
+		static bool is_valid(const unsigned int day, const unsigned int month, const unsigned int year);
+
 	};
 	std::ostream& operator<<(std::ostream& out, const Date date);
 	bool operator==(const Date& a, const Date& b);
