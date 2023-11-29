@@ -10,17 +10,15 @@
 
 int main(int argv, char* argc[])
 {
-	test::test_date_valid();				//test::CheckError throwed
-	test::test_date_invalid();				//OK
-	test::test_date_getter();				//std::invalid_argument throwed
-											//what():  Invalid date provided
-	test::test_date_leap_years();			//test::CheckError throwed
-	test::test_date_constructors();			//OK
-	test::test_date_operators();			//std::invalid_argument throwed
-											//what():  Invalid date provided
-	test::test_book_constructor();			//OK
-	test::test_book_getter();				//OK
-	test::test_book_operators();			//OK
+	test::test_date_valid();
+	test::test_date_invalid();
+	test::test_date_getter();
+	test::test_date_leap_years();
+	test::test_date_constructors();
+	test::test_date_operators();
+	test::test_book_constructor();
+	test::test_book_getter();
+	test::test_book_operators();
 
 	test::test_bookshelf_constructors();
 	test::test_bookshelf_methods();		
@@ -29,7 +27,7 @@ int main(int argv, char* argc[])
 
 	// Test richiesto dalla consegna
 	
-	prj::Book mybook("David", "Foster Wallace", "Una cosa divertente che non farò mai più", "887-521-837-4");
+	prj::Book mybook("David", "Foster Wallace", "Una cosa divertente che non faro' mai piu'", "887-521-837-4");
 	prj::Bookshelf shelf(10);
 	shelf.push_back(mybook);
 	std::cout<<shelf[10];

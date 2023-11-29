@@ -1,8 +1,8 @@
-#include "book.h"
-
 #include <stdexcept>
 #include <string>
 #include <iostream>
+
+#include "book.h"
 
 namespace prj
 {

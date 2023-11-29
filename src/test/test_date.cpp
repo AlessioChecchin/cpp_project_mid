@@ -1,9 +1,9 @@
-#include "test/test_date.h"
-
 #include <stdexcept>
 #include <vector>
 #include <sstream>
 #include <string>
+
+#include "test/test_date.h"
 
 #include "test/test.h"
 #include "date.h"
@@ -12,12 +12,11 @@
 namespace test
 {
 
-void test_date_operators()				//std::invalid_argument throwed //what():  Invalid date provided
+void test_date_operators()
 {
 	// operator=
-	prj::Date a;								//OK
-	prj::Date b = a;							//std::invalid_argument throwed
-												//what():  Invalid date provided
+	prj::Date a;
+	prj::Date b = a;
 	check(b.get_day() == a.get_day());
 	check(b.get_month() == a.get_month());
 	check(b.get_year() == a.get_year());
@@ -25,8 +24,7 @@ void test_date_operators()				//std::invalid_argument throwed //what():  Invalid
 	check(a == b);
 
 	// operator !=
-	prj::Date c(1,1,1600);						//std::invalid_argument throwed
-												//what():  Invalid date provided
+	prj::Date c(1,1,1600);
 	check(a != c);
 
 	// operator<<
@@ -86,16 +84,16 @@ bool is_valid_date(int day, int month, int year)
 	}
 }
 
-void test_date_valid()			//test::CheckError throwed
+void test_date_valid()
 {
-	check(is_valid_date(12, 2, 1800) == true);			//test::CheckError throwed
-	check(is_valid_date(15, 2, 1899) == true);			//test::CheckError throwed
-	check(is_valid_date(15, 2, 1900) == true);			//test::CheckError throwed
-	check(is_valid_date(15, 2, 1932) == true);			//test::CheckError throwed
-	check(is_valid_date(29, 9, 2003) == true);			//OK
+	check(is_valid_date(12, 2, 1800) == true);
+	check(is_valid_date(15, 2, 1899) == true);
+	check(is_valid_date(15, 2, 1900) == true);
+	check(is_valid_date(15, 2, 1932) == true);
+	check(is_valid_date(29, 9, 2003) == true);
 }
 
-void test_date_leap_years()			//test::CheckError throwed
+void test_date_leap_years()
 {
 	std::vector<int> leap_years {
 		1904, 1908, 1912, 1916, 1920, 1924, 1928, 1932, 1936,
@@ -132,34 +130,33 @@ void test_date_leap_years()			//test::CheckError throwed
 
 	for(int i = 0; i < leap_years.size(); i++)
 	{
-		check(is_valid_date(29, 2, leap_years[i]) == true);				//test::CheckError throwed
+		check(is_valid_date(29, 2, leap_years[i]) == true);
 	}
 
 	for(int i = 0; i < not_leap_years.size(); i++)
 	{
-		check(is_valid_date(29, 2, not_leap_years[i]) == false);		//OK
+		check(is_valid_date(29, 2, not_leap_years[i]) == false);
 	}
 }
 
-void test_date_invalid()			//OK
+void test_date_invalid()
 {
 	check(is_valid_date(29, 13, 1000) == false);
-	check(is_valid_date(29, 13, 2003) == false);		//OK
-	check(is_valid_date(29, 2, 2001) == false);			//OK
-	check(is_valid_date(12, 13, 2001) == false);		//OK
-	check(is_valid_date(-1, 1, 2001) == false);			//OK
-	check(is_valid_date(1, 13, 1384) == false);			//OK
+	check(is_valid_date(29, 13, 2003) == false);
+	check(is_valid_date(29, 2, 2001) == false);
+	check(is_valid_date(12, 13, 2001) == false);
+	check(is_valid_date(-1, 1, 2001) == false);
+	check(is_valid_date(1, 13, 1384) == false);
 }
 
-void test_date_getter()				//std::invalid_argument throwed //what():  Invalid date provided
+void test_date_getter()
 {
-	prj::Date a(29, 12, 1999);			//OK
-	check(a.get_day() == 29);			//OK
-	check(a.get_month() == 12);			//OK
-	check(a.get_year() == 1999);		//OK
+	prj::Date a(29, 12, 1999);
+	check(a.get_day() == 29);
+	check(a.get_month() == 12);
+	check(a.get_year() == 1999);
 
-	prj::Date b(4, 6, -1);				//std::invalid_argument throwed
-										//what():  Invalid date provided
+	prj::Date b(4, 6, -1);
 	check(b.get_day() == 4);
 	check(b.get_month() == 6);
 	check(b.get_year() == -1);

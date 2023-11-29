@@ -6,7 +6,7 @@
 namespace test
 {
 
-void test_book_constructor()			//OK
+void test_book_constructor()
 {
 	// Testing Default constructor
 	prj::Book e {};
@@ -78,7 +78,7 @@ void test_book_constructor()			//OK
 	
 }
 
-void test_book_getter()			//OK
+void test_book_getter()
 {
 
 	// Complete constructor
@@ -103,7 +103,7 @@ void test_book_getter()			//OK
 }
 
 
-void test_book_operators()			//OK
+void test_book_operators()
 {
 	prj::Book a {"Name", "Surname", "Title", "1234567890123"};
 

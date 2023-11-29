@@ -1,7 +1,8 @@
-#include "date.h"
-
 #include <stdexcept>
 #include <string>
+
+#include "date.h"
+
 namespace prj
 {
 
