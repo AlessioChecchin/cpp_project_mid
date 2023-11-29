@@ -3,9 +3,9 @@
 
 namespace test
 {
-    void test_bookshelf_constructors();
-    void test_bookshelf_methods();
-    void test_bookshelf_operators();
+void test_bookshelf_constructors();
+void test_bookshelf_methods();
+void test_bookshelf_operators();
 }
 
 #endif // TEST_BOOKSHELF_H_

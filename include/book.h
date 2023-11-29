@@ -11,6 +11,9 @@
 */
 namespace prj
 {
+	/**
+	 * Implements a Book.
+	*/
 	class Book
 	{
 	
@@ -170,9 +173,9 @@ namespace prj
 		void set_state(State state);
 
 		/**
-		 * Assign operator
+		 * Assign operator.
 		 * 
-		 * @param book The book assign
+		 * @param book The book to assign.
 		*/
 		Book& operator=(const Book& book);
 		
@@ -183,13 +186,36 @@ namespace prj
 		*/
 		static const unsigned short kIsbnSize = 13;
 
+		/**
+		 * The author name.
+		*/
 		std::string author_name_ {};
+		
+		/**
+		 * The author surname.
+		*/
 		std::string author_surname_ {};
+		
+		/**
+		 * The book title.
+		*/
 		std::string title_ {};
+		
+		/**
+		 * The book isbn.
+		*/
 		std::string isbn_ {};
 
+		/**
+		 * The book copyright date (if it has one).
+		*/
 		Date* copyright_date_ {};
+
+		/**
+		 * The book state.
+		*/
 		State state_ {};
+	
 	};
 	
 	bool operator==(const Book& a, const Book& b);

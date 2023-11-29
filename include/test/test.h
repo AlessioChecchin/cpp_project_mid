@@ -1,11 +1,11 @@
 #ifndef TEST_H_
 #define TEST_H_
+
 namespace test
 {
-	class CheckError{};
+class CheckError{};
 
-	void check(bool flag);
-	
+void check(bool flag);	
 } // test
 
 #endif // TEST_H_
