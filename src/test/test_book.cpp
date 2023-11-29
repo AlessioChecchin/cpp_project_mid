@@ -128,15 +128,21 @@ void test_book_operators()
 
 	// operator<<
 	std::ostringstream os;
-
-	prj::Book c("David", "Foster Wallace", "Una cosa divertente che non faro' mai piu'", "887-521-837-4");
-	os << c;
-	std::string bookString = "Una cosa divertente che non faro' mai piu'\nDavid\nFoster Wallace\n887-521-837-4\nNo copyright date\n";
-	check(os.str() == bookString);
+	std::string auth_names[3] = {"Mario", "Luigi" , "Gianni"};
+	std::string auth_surnames[3] = {"Rossi", "Bianchi" , "Verdi"};
+	std::string titles[3] = {"Libro1", "Libro1 2: La Vendetta" , "Libro1 3: Il Ritorno"};
+	std::string isbn_codes[3] = {"000-000-000-1", "000-000-000-2" , "000-000-000-3"};
+	for(int i = 0; i < 3; i++)
+	{
+		prj::Book book(auth_names[i], auth_surnames[i], titles[i], isbn_codes[i]);
+		os << book;
+		std::string bookString = book.get_title() + "\n" + book.get_author_name() + "\n" + book.get_author_surname() + "\n" + book.get_isbn() + "\n" + "No copyright date" + "\n";
+		check(os.str() == bookString);
 		
-	// Resets ostringstream
-	os.str("");		//required to clear the stream
-	os.clear();		//required to clear errors
+		// Resets ostringstream
+		os.str("");		//required to clear the stream
+		os.clear();		//required to clear errors
+	}
 
 }
 

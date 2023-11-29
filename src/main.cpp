@@ -27,7 +27,7 @@ int main(int argv, char* argc[])
 
 
 	// Test richiesto dalla consegna
-	
+
 	prj::Book mybook("David", "Foster Wallace", "Una cosa divertente che non faro' mai piu'", "887-521-837-4");
 	prj::Bookshelf shelf(10);
 	shelf.push_back(mybook);
