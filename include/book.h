@@ -118,6 +118,7 @@ namespace prj
 
 		/**
 		 * State getter.
+		 * It is used to know wheter a book is available or on loan.
 		 * 
 		 * @return The state of the book.
 		*/
@@ -166,7 +167,8 @@ namespace prj
 		void set_copyright_date(const Date* date);
 
 		/**
-		 * Copyright state setter.
+		 * State setter.
+		 * It is used to change the state of the book from Available to OnLoan and viceversa.
 		 * 
 		 * @param state The new state.
 		*/
