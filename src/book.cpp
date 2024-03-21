@@ -1,8 +1,8 @@
-#include "Book.h"
-
 #include <stdexcept>
 #include <string>
 #include <iostream>
+
+#include "book.h"
 
 namespace prj
 {
@@ -170,14 +170,16 @@ bool operator!=(const Book& a, const Book& b)
 
 std::ostream& operator<<(std::ostream& out, const Book& book)
 {
-	//TODO: XX
-	out << book.get_title() << " "
-	    << book.get_author_name() << " "
-		<< book.get_author_surname() << " "
-		<< book.get_isbn() << " "
-		<< (book.has_copyright() ? "copyright date" : "No copyright date");
-		
+	out << book.get_title() << "\n"
+	    << book.get_author_name() << "\n"
+		<< book.get_author_surname() << "\n"
+		<< book.get_isbn() << "\n" ;
+	if(book.has_copyright())
+		out << book.get_copyright_date();
+	else
+		out << "No copyright date";	
+	out << std::endl;	
 	return out;
 }
 
-}
+} // prj
